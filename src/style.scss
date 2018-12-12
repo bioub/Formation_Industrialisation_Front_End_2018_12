@@ -1,0 +1,9 @@
+$clockColor: purple;
+$primary: $clockColor;
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+.horloge {
+  color: $clockColor;
+  background-color: lighten($clockColor, 40%);
+}
