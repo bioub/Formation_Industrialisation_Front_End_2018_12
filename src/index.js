@@ -1,9 +1,18 @@
-// import 'jquery';
-import $ from "bootstrap";
+import $ from 'jquery';
+import 'bootstrap';
+import { Clock } from './clock';
 
-var $mainBtn = $("#main-btn");
+const $mainBtn = $('#main-btn');
 
 $mainBtn.tooltip({
-  title: "Cliquez ici",
-  placement: "right"
+  title: 'Cliquez ici',
+  placement: 'right',
 });
+
+const horlogeElt = document.querySelector('#horloge');
+
+const horloge = new Clock({
+  container: horlogeElt,
+});
+
+horloge.start();
