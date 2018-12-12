@@ -10,7 +10,7 @@
     "prettier": "^1.15.3"
   },
   "scripts": {
-    "prettier": "prettier **/*.{html,js,ts,css,scss,json} --write"
+    "format": "prettier **/*.{html,js,ts,css,scss,json} --write"
   },
   "husky": {
     "hooks": {
