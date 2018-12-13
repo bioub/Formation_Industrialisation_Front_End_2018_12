@@ -8,8 +8,8 @@ export interface IClockOptions {
 }
 
 export class Clock {
-  private container: Element | null;
-  private format: string;
+  public container: Element | null;
+  public format: string;
 
   constructor(options: IClockOptions = {}) {
     this.container = options.container || document.body;

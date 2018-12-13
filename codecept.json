@@ -1,0 +1,14 @@
+{
+  "tests": "./e2e/*_test.js",
+  "timeout": 10000,
+  "output": "./output",
+  "helpers": {
+    "Puppeteer": {
+      "url": "http://localhost:8080",
+      "show": true
+    }
+  },
+  "bootstrap": false,
+  "mocha": {},
+  "name": "Formation"
+}
