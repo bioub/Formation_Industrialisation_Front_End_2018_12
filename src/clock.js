@@ -1,3 +1,7 @@
+// import 'core-js/fn/string/starts-with';
+// import format from 'date-fns/format'; // cherry picking
+import { format } from 'date-fns'; // tree shaking
+
 export class Clock {
   /**
    * La classe Horloge (usejsdoc.org)
@@ -11,7 +15,7 @@ export class Clock {
   }
   update() {
     const now = new Date();
-    this.container.innerHTML = now.toLocaleTimeString();
+    this.container.innerHTML = format(now, this.format);
   }
   start() {
     this.update();

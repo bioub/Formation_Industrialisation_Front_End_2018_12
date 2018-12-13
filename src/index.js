@@ -1,22 +1,22 @@
 import $ from 'jquery';
 import 'bootstrap';
-import { Clock } from './clock';
-import css from './style.scss';
-
-console.log(css);
+import './style.scss';
 
 const $mainBtn = $('#main-btn');
 
 $mainBtn.tooltip({
-  title: 'Cliquez ici',
+  title: 'Cliquez ici !',
   placement: 'right',
 });
 
-const horlogeElt = document.querySelector('#horloge');
-horlogeElt.classList.add(css.horloge);
+document.addEventListener('click', () => {
+  import('./clock').then(({ Clock }) => {
+    const horlogeElt = document.querySelector('.horloge');
 
-const horloge = new Clock({
-  container: horlogeElt,
+    const horloge = new Clock({
+      container: horlogeElt,
+    });
+
+    horloge.start();
+  });
 });
-
-horloge.start();

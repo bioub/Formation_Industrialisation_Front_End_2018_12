@@ -1,45 +1,70 @@
+'use strict';
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-// npm i webpack webpack-cli html-webpack-plugin webpack-dev-server babel-loader @babel/core @babel/preset-env -D
-// npm i typescript awesome-typescript-loader -D
-// npm i css-loader style-loader sass-loader node-sass -D
-
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'app.js',
-  },
-  plugins: [
+module.exports = function(_, { mode }) {
+  const plugins = [
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
+  ];
+
+  if (mode === 'production') {
+    plugins.push(
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+    );
+  }
+
+  return {
+    devtool: mode === 'development' ? 'source-map' : false,
+    entry: './src/index.js',
+    output: {
+      filename: mode === 'production' ? 'app.[chunkHash].min.js' : 'app.js',
+    },
+    plugins,
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-syntax-dynamic-import'],
+            },
           },
         },
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          /*{
-            loader: 'css-loader',
-            options: {
-              modules: true,
-            }
-          },*/
-          'sass-loader',
-        ],
-      },
-    ],
-  },
+        {
+          test: /\.scss$/,
+          use: [
+            mode === 'production'
+              ? {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: {
+                    // you can specify a publicPath here
+                    // by default it use publicPath in webpackOptions.output
+                    publicPath: '../',
+                  },
+                }
+              : 'style-loader',
+            'css-loader',
+            /*{
+              loader: 'css-loader',
+              options: {
+                modules: true,
+              }
+            },*/
+            'sass-loader',
+          ],
+        },
+      ],
+    },
+  };
 };
