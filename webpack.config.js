@@ -23,13 +23,20 @@ module.exports = function(_, { mode }) {
 
   return {
     devtool: mode === 'development' ? 'source-map' : false,
-    entry: './src/index.js',
+    resolve: {
+      extensions: ['.ts', '.js'],
+    },
+    entry: './src/index.ts',
     output: {
       filename: mode === 'production' ? 'app.[chunkHash].min.js' : 'app.js',
     },
     plugins,
     module: {
       rules: [
+        {
+          test: /\.ts$/,
+          use: 'awesome-typescript-loader',
+        },
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -46,13 +53,13 @@ module.exports = function(_, { mode }) {
           use: [
             mode === 'production'
               ? {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: {
-                    // you can specify a publicPath here
-                    // by default it use publicPath in webpackOptions.output
-                    publicPath: '../',
-                  },
-                }
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  // you can specify a publicPath here
+                  // by default it use publicPath in webpackOptions.output
+                  publicPath: '../',
+                },
+              }
               : 'style-loader',
             'css-loader',
             /*{

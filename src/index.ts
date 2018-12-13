@@ -1,12 +1,13 @@
-import $ from 'jquery';
 import 'bootstrap';
+import 'core-js/fn/promise';
+import $ from 'jquery';
 import './style.scss';
 
 const $mainBtn = $('#main-btn');
 
 $mainBtn.tooltip({
-  title: 'Cliquez ici !',
   placement: 'right',
+  title: 'Cliquez ici !',
 });
 
 document.addEventListener('click', () => {
